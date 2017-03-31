@@ -162,7 +162,7 @@ class WebView extends React.Component {
     allowUniversalAccessFromFileURLs: PropTypes.bool,
 
     /**
-     * Used on Android only, autocomplete cannot be programatically turned off on iOS
+     * Used on Android only, controls whether form autocomplete data should be saved
      * @platform android
      */
     saveFormDataDisabled: PropTypes.bool,
