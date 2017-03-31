@@ -243,6 +243,7 @@ class WebView extends React.Component {
         testID={this.props.testID}
         mediaPlaybackRequiresUserAction={this.props.mediaPlaybackRequiresUserAction}
         allowUniversalAccessFromFileURLs={this.props.allowUniversalAccessFromFileURLs}
+        saveFormDataDisabled={this.props.saveFormDataDisabled}
       />;
 
     return (
