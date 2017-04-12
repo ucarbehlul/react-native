@@ -53,6 +53,7 @@ class WebView extends React.Component {
     onLoadEnd: PropTypes.func,
     onLoadStart: PropTypes.func,
     onError: PropTypes.func,
+    onSslError: PropTypes.func,
     automaticallyAdjustContentInsets: PropTypes.bool,
     contentInset: EdgeInsetsPropType,
     onNavigationStateChange: PropTypes.func,
@@ -240,6 +241,7 @@ class WebView extends React.Component {
         onLoadingStart={this.onLoadingStart}
         onLoadingFinish={this.onLoadingFinish}
         onLoadingError={this.onLoadingError}
+        onLoadingSslError={this.onLoadingSslError}
         testID={this.props.testID}
         mediaPlaybackRequiresUserAction={this.props.mediaPlaybackRequiresUserAction}
         allowUniversalAccessFromFileURLs={this.props.allowUniversalAccessFromFileURLs}
@@ -334,6 +336,19 @@ class WebView extends React.Component {
     onError && onError(event);
     onLoadEnd && onLoadEnd(event);
     console.warn('Encountered an error loading page', event.nativeEvent);
+
+    this.setState({
+      lastErrorEvent: event.nativeEvent,
+      viewState: WebViewState.ERROR
+    });
+  };
+
+  onLoadingSslError = (event) => {
+    event.persist(); // persist this event because we need to store it
+    var {onSslError, onLoadEnd} = this.props;
+    onSslError && onSslError(event);
+    onLoadEnd && onLoadEnd(event);
+    console.warn('Encountered an SSL error loading page', event.nativeEvent);
 
     this.setState({
       lastErrorEvent: event.nativeEvent,
