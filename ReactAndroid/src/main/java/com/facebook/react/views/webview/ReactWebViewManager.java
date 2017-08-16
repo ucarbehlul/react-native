@@ -376,7 +376,6 @@ public class ReactWebViewManager extends SimpleViewManager<WebView> {
             view.getId(),
             event));
       }
-    });
 
       @Override
       public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
