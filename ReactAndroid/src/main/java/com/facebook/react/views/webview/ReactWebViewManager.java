@@ -31,6 +31,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Picture;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -39,6 +40,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.GeolocationPermissions;
+import android.webkit.SslErrorHandler;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -67,6 +69,7 @@ import com.facebook.react.uimanager.events.Event;
 import com.facebook.react.uimanager.events.EventDispatcher;
 import com.facebook.react.views.webview.events.TopLoadingErrorEvent;
 import com.facebook.react.views.webview.events.TopLoadingFinishEvent;
+import com.facebook.react.views.webview.events.TopLoadingSslErrorEvent;
 import com.facebook.react.views.webview.events.TopLoadingStartEvent;
 import com.facebook.react.views.webview.events.TopMessageEvent;
 import java.io.UnsupportedEncodingException;
@@ -230,6 +233,19 @@ public class ReactWebViewManager extends SimpleViewManager<WebView> {
       dispatchEvent(
           webView,
           new TopLoadingErrorEvent(webView.getId(), eventData));
+    }
+
+    @Override
+    public void onReceivedSslError(WebView webView, SslErrorHandler handler, SslError error) {
+      super.onReceivedSslError(webView, handler, error);
+
+      ReactWebView reactWebView = (ReactWebView) webView;
+      WritableMap eventData = reactWebView.createWebViewEvent(error.getUrl());
+      eventData.putDouble("code", error.getPrimaryError());
+
+      dispatchEvent(
+        webView,
+        new TopLoadingSslErrorEvent(webView.getId(), eventData));
     }
 
     @Override

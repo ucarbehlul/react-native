@@ -79,6 +79,7 @@ import java.util.Map;
         .put("topContentSizeChange", MapBuilder.of(rn, "onContentSizeChange"))
         .put("topLayout", MapBuilder.of(rn, "onLayout"))
         .put("topLoadingError", MapBuilder.of(rn, "onLoadingError"))
+        .put("topLoadingSslError", MapBuilder.of(rn, "onLoadingSslError"))
         .put("topLoadingFinish", MapBuilder.of(rn, "onLoadingFinish"))
         .put("topLoadingStart", MapBuilder.of(rn, "onLoadingStart"))
         .put("topSelectionChange", MapBuilder.of(rn, "onSelectionChange"))
